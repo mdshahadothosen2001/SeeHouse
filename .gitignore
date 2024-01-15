@@ -1,0 +1,23 @@
+# Byte files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Migrations
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
