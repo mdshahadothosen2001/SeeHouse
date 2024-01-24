@@ -32,6 +32,7 @@ LOCAL_APPS = [
     "address",
     "user",
     "user_address",
+    "shop",
     "product",
 ]
 
