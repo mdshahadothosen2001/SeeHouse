@@ -34,6 +34,7 @@ LOCAL_APPS = [
     "user_address",
     "shop",
     "product",
+    "subcategory",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
