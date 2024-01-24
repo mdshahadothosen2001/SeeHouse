@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from JWT_SETTINGS import JWT_SETTINGS
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,11 +20,30 @@ DJANGO_APPS = [
     "django.contrib.staticfiles",
 ]
 
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "rest_framework_simplejwt",
+]
+
 LOCAL_APPS = [
     "utils",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTStatelessUserAuthentication",
+    ],
+    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+
+SIMPLE_JWT = JWT_SETTINGS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
