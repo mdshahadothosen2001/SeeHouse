@@ -9,6 +9,9 @@ class ShopAdmin(admin.ModelAdmin):
         "vendor",
         "shop_number",
         "shop_name",
+        "shop_type",
+        "fields",
+        "service_started",
         "shop_title",
         "delivery_days",
         "cover_image",
@@ -19,6 +22,9 @@ class ShopAdmin(admin.ModelAdmin):
         "vendor",
         "shop_number",
         "shop_name",
+        "shop_type",
+        "fields",
+        "service_started",
         "shop_title",
         "cover_image",
         "is_active",
@@ -27,6 +33,8 @@ class ShopAdmin(admin.ModelAdmin):
         "vendor__phone_number",
         "shop_number",
         "shop_name",
+        "shop_type",
+        "fields",
         "is_active",
     )
     list_per_page = 25
