@@ -8,7 +8,7 @@ class Subcategory(models.Model):
     subcategory_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return self.subcategory_name
     
     class Meta:
         verbose_name = "product Subcategory"
