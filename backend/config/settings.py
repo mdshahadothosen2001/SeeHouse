@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from JWT_SETTINGS import JWT_SETTINGS
+from .JWT_SETTINGS import JWT_SETTINGS
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
