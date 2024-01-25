@@ -19,6 +19,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["email"] = user.email
         token["first_name"] = user.first_name
         token["last_name"] = user.last_name
+        token["user_type"] = user.user_type
         token["current_date"] = datetime.now().strftime("%Y:%m:%d")
         current_time = datetime.now().strftime("%I:%M:%p")
         token["current_time"] = current_time
