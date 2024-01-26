@@ -39,6 +39,7 @@ LOCAL_APPS = [
     "category",
     "vendor_api",
     "customer_api",
+    "product_api",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
