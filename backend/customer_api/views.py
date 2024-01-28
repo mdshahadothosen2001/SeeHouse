@@ -3,8 +3,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from django.db.models import Q
+
 from .serializers import CustomerSerializer
-from user.models import Customer
+from user.models import UserAccount
 
 
 class CustomerRegisterView(APIView):
@@ -22,9 +24,12 @@ class CustomerRegisterView(APIView):
         if not phone_number or not email or not password:
             raise ValidationError("Must required phone_number and email and password")
         
-        is_member = Customer.objects.filter(phone_number=phone_number).values()
-        if len(is_member) !=0:
-            return Response("You have already account at SeeHouse")
+        # check this phone_number exists or email using complex query with OR operation, 
+        # if any exists return 
+        is_member = UserAccount.objects.filter(Q(phone_number=phone_number) | Q(email=email)).values()
+        if is_member:
+            if len(is_member) !=0:
+                return Response("You have already account at SeeHouse")
         
         customer_data = {
             "phone_number":phone_number,
