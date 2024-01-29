@@ -1,10 +1,10 @@
 from django.db import models
 
-from product.models import Product
+from category.models import Category
 
 
 class Subcategory(models.Model):
-    product = models.ManyToManyField(Product)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
     subcategory_name = models.CharField(max_length=100)
 
     def __str__(self):

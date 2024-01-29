@@ -2,6 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.html import mark_safe
 
+from subcategory.models import Subcategory
 from utils.models import CommonInfo
 from shop.models import Shop
 
@@ -10,6 +11,7 @@ class Product(CommonInfo):
     shop = models.ForeignKey(Shop, on_delete=models.DO_NOTHING)
     product_name = models.CharField(max_length=100)
     product_code = models.CharField(max_length=100, unique=True)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.DO_NOTHING)
     description = models.TextField()
     product_thumbnail = models.ImageField(upload_to="images/uploads/%Y/%m/%d")
     stock = models.PositiveIntegerField()

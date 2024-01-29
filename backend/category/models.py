@@ -1,10 +1,7 @@
 from django.db import models
 
-from subcategory.models import Subcategory
-
 
 class Category(models.Model):
-    subcategory = models.ManyToManyField(Subcategory)
     category_name = models.CharField(max_length=100)
 
     def __str__(self):

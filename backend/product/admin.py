@@ -12,6 +12,7 @@ class ProductAdmin(admin.ModelAdmin):
         "stock",
         "price",
         "rating",
+        "subcategory",
     )
     list_display_links = (
         "product_name",
@@ -19,12 +20,14 @@ class ProductAdmin(admin.ModelAdmin):
         "thumbnail",
         "price",
         "rating",
+        "subcategory",
     )
     search_fields = (
         "product_name",
         "product_code",
         "price",
         "rating",
+        "subcategory",
     )
     list_per_page = 25
 
