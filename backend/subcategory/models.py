@@ -11,6 +11,6 @@ class Subcategory(models.Model):
         return self.subcategory_name
     
     class Meta:
-        verbose_name = "product Subcategory"
-        verbose_name_plural = "Product Subcategories"
+        verbose_name = "Subcategory"
+        verbose_name_plural = "Subcategories"
         db_table = "subcategory"

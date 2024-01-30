@@ -8,6 +8,6 @@ class Category(models.Model):
         return self.category_name
     
     class Meta:
-        verbose_name = "product Category"
-        verbose_name_plural = "Product Categories"
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
         db_table = "category"
