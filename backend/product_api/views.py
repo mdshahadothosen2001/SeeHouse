@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404, get_list_or_404
 
 from subcategory.models import Subcategory
+from category.models import Category
 from product.models import Product
 
 
@@ -37,3 +38,22 @@ class ProductView(APIView):
             }]
 
         return Response({"product":products_data})
+
+
+class ProductCategoryView(APIView):
+    """This class used to return category list"""
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+
+        categories = get_list_or_404(Category)
+        category_data = []
+        for category in categories:
+            category_data += [
+                {
+                    "category_id":category.id,
+                    "category_name":category.category_name
+                }
+            ]
+        return Response(category_data)
