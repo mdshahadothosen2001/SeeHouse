@@ -16,7 +16,7 @@ class Shop(TimeStamp):
     fields = models.CharField(max_length=100, null=True, blank=True)
     service_started = models.DateField(auto_now=False, null=True, blank=True)
     about = models.TextField()
-    delivery_days = models.PositiveSmallIntegerField()
+    delivery_days = models.PositiveSmallIntegerField(null=True, blank=True)
     cover_photo = models.ImageField(upload_to="images/uploads/shop_cover_photo")
     rating = models.FloatField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
