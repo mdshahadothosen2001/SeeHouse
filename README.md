@@ -52,15 +52,38 @@
     "refresh":"..."
 }
 ```
+4. Service list API with GET Method : `localhost/vendor/service/`
 
+5. Creating New shop with POST Method : `localhost/vendor/service/create/`
+
+```bash
+{
+            "shop_name":"....",
+            "shop_number":"...",
+            "shop_type":"...",
+            "shop_title":"...",
+            "fields":"...",
+            "about":"...",
+            "service_started":"YY-MM-DD"
+}
+```
 
 # ` `
 
 ## Product APIs
 
-1. Product list API with GET Method with subcategory ID : `localhost/product/`
+1. Product Category list API with GET Method : `localhost/product/category/`
+
+2. Product Subcategory list API with GET Method with category ID : `localhost/product/category/subcategory/`
 ```bash
 {
-    "subcategory":1
+    "category_id":1
+}
+```
+
+3. Product list API with GET Method with subcategory ID : `localhost/product/`
+```bash
+{
+    "subcategory_id":1
 }
 ```

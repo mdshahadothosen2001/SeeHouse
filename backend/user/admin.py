@@ -61,6 +61,7 @@ class UserAccountAdmin(admin.ModelAdmin):
 
 class VendorAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "phone_number",
         "email",
         "user_amount",
@@ -102,6 +103,7 @@ class VendorAdmin(admin.ModelAdmin):
 
 class CustomerAdmin(admin.ModelAdmin):
     list_display = (
+        "id",
         "phone_number",
         "email",
         "user_amount",
