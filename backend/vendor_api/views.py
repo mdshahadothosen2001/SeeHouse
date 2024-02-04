@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from django.shortcuts import get_list_or_404, get_object_or_404
 
-from .serializers import CreateServiceSerializer
+from .serializers import CreateServiceSerializer, UpdateServiceSerializer
 from shop_type.models import ShopType
 from shop.models import Shop
 
@@ -79,3 +79,20 @@ class ServiceView(APIView):
             ]
         
         return Response({"service":service_data})
+
+
+class ServiceUpdateView(APIView):
+    """This class permit to update their information about service"""
+
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+
+        instance = get_object_or_404(Shop, vendor=request.user.id)
+        serializer = UpdateServiceSerializer(instance=instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response("Your information has been updated!")
+        else:
+            return Response({"error":serializer.errors})
+        
