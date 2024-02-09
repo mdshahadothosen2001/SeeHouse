@@ -1,13 +1,15 @@
 from rest_framework.exceptions import ValidationError
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from django.shortcuts import get_list_or_404
 
+from .serializers import ProductSerializer
 from subcategory.models import Subcategory
 from category.models import Category
 from product.models import Product
+from shop.models import Shop
 
 
 class ProductView(APIView):
@@ -82,3 +84,45 @@ class ProductSubCategoryView(APIView):
             ]
 
         return Response({"subcategory":subcategory_data})
+
+
+class ProductCreateView(APIView):
+    """Used for creating new product"""
+
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+
+        shop_name = request.data.get("shop_name")
+        product_name = request.data.get("product_name")
+        product_code = request.data.get("product_code")
+        subcategory_name = request.data.get("subcategory_name")
+        description = request.data.get("description")
+        stock = request.data.get("stock")
+        price = request.data.get("price")
+
+        if not shop_name or not product_name or not product_code or not subcategory_name:
+            raise ValidationError("Must required shop_name and product_name and product_code and subcategory") 
+        
+        shop_instance =  get_list_or_404(Shop, shop_name=shop_name.upper())
+        subcategory_instance = get_list_or_404(Subcategory, subcategory_name=subcategory_name.upper())
+
+        product_data = {
+            "shop":shop_instance[0].id,
+            "product_name":product_name,
+            "product_code":product_code,
+            "subcategory":subcategory_instance[0].id,
+            "description":description,
+            "stock":stock,
+            "price":price,
+            "rating":0
+        }
+
+        print("................", product_data)
+
+        serializer = ProductSerializer(data=product_data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"success":"Created your product!"})
+        else:
+            return Response({"error":serializer.errors})

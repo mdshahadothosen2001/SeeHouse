@@ -34,7 +34,7 @@ class CreateServiceView(APIView):
 
         shop_data = {
             "vendor":vendor_id,
-            "shop_name":shop_name,
+            "shop_name":shop_name.upper(),
             "shop_number":shop_number,
             "shop_type":shop_type_object.id,
             "shop_title":shop_title,

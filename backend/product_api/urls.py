@@ -3,7 +3,8 @@ from django.urls import path
 from .views import (
     ProductView,
     ProductCategoryView,
-    ProductSubCategoryView
+    ProductSubCategoryView,
+    ProductCreateView,
     )
 
 urlpatterns = [
@@ -26,5 +27,12 @@ urlpatterns = [
         route="category/subcategory/",
         view=ProductSubCategoryView.as_view(),
         name="product_subcategory"
+    ),
+
+    # GET localhost/product/create/
+    path(
+        route="create/",
+        view=ProductCreateView.as_view(),
+        name="product_create"
     ),
 ]
