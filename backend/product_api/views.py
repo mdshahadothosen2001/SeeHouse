@@ -3,9 +3,9 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404
 
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, ProductUpdateSerializer
 from subcategory.models import Subcategory
 from category.models import Category
 from product.models import Product
@@ -124,5 +124,27 @@ class ProductCreateView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response({"success":"Created your product!"})
+        else:
+            return Response({"error":serializer.errors})
+
+
+class ProductUpdateView(APIView):
+    """Used for updating any existing product"""
+
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request, *args, **kwargs):
+        id = request.data.get("id")
+
+        if not  id:
+            raise ValidationError("Must required product id") 
+        
+        product_instance =  get_object_or_404(Product, id=id)
+
+        serializer = ProductUpdateSerializer(instance=product_instance, data=request.data, partial=True)
+        print(serializer.is_valid(), serializer)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"success":"Updated your product!"})
         else:
             return Response({"error":serializer.errors})

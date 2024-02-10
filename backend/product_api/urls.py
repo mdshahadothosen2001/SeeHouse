@@ -5,6 +5,7 @@ from .views import (
     ProductCategoryView,
     ProductSubCategoryView,
     ProductCreateView,
+    ProductUpdateView,
     )
 
 urlpatterns = [
@@ -34,5 +35,12 @@ urlpatterns = [
         route="create/",
         view=ProductCreateView.as_view(),
         name="product_create"
+    ),
+
+    # GET localhost/product/update/
+    path(
+        route="update/",
+        view=ProductUpdateView.as_view(),
+        name="product_update"
     ),
 ]
