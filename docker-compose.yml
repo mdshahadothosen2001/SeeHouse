@@ -1,0 +1,58 @@
+version: "3"
+
+services:
+  db_seehouse:
+    image: postgres:15
+    restart: always
+    container_name: db_seehouse
+    env_file:
+      - ./.env/dev.env
+      - ./.env/base.env
+      - ./.env/test.env
+    ports:
+      - 5431:5532
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - main
+
+  redis:
+    image: redis:7.0.7
+    restart: always
+    env_file:
+      - ./.env/dev.env
+    command: sh -c "redis-server --save 20 1 --loglevel warning --requirepass $${REDIS_PWD}"
+    volumes:
+      - redis_data:/data
+    networks:
+      - main
+
+  seehouse_backend:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/development/Dockerfile
+    container_name: seehouse_backend
+    command: >
+            sh -c "cd /app/backend &&
+            python manage.py makemigrations --settings=config.settings.dev_settings &&
+            python manage.py migrate --settings=config.settings.dev_settings &&
+            python manage.py runserver 0.0.0.0:8011 --settings=config.settings.dev_settings"
+    volumes:
+      - .:/app
+    ports:
+      - "8011:8011"
+    depends_on:
+      - db_seehouse
+    env_file:
+      - ./.env/dev.env
+      - ./.env/base.env
+    networks:
+      - main
+
+networks:
+  main:
+
+volumes:
+  pgdata:
+  redis_data:

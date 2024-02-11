@@ -1,6 +1,9 @@
 from pathlib import Path
+import dj_database_url
 
-from .JWT_SETTINGS import JWT_SETTINGS
+import os
+
+from config.JWT_SETTINGS import JWT_SETTINGS
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,15 +37,13 @@ LOCAL_APPS = [
     "user_address",
     "shop_type",
     "shop",
-    "product",
-    "subcategory",
     "category",
+    "subcategory",
+    "product",
     "vendor_api",
     "customer_api",
     "product_api",
 ]
-
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -88,11 +89,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-DATABASES = {
+# Caching in Redis
+# https://pypi.org/project/django-redis/
+CACHES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("REDIS_CONNECTION"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
     }
+}
+
+DATABASES = {
+    "default": dj_database_url.config(
+        default=os.environ.get("DB_CONNECTION"),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
