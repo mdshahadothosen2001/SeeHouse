@@ -18,7 +18,7 @@ urlpatterns = [
 
     # GET localhost/product/category/
     path(
-        route="category",
+        route="category/",
         view=ProductCategoryView.as_view(),
         name="product_category"
     ),
