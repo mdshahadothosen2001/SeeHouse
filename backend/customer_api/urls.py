@@ -10,6 +10,5 @@ urlpatterns = [
         view=CustomerRegisterView.as_view(),
         name="customer_register",
     ),
-    
     path("", include("customer_api.token_api.urls")),
 ]

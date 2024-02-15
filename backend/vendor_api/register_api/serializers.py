@@ -10,12 +10,21 @@ class VendorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vendor
-        fields = ["id", "phone_number", "email", "first_name", "last_name", "tin_number", "is_vendor", "password"]
+        fields = [
+            "id",
+            "phone_number",
+            "email",
+            "first_name",
+            "last_name",
+            "tin_number",
+            "is_vendor",
+            "password",
+        ]
 
     def create(self, validated_data):
         password = validated_data.pop("password")
         user = super().create(validated_data)
         user.set_password(password)
         user.save()
-        
+
         return user

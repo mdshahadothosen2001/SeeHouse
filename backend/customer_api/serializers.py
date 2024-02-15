@@ -10,8 +10,16 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ["id", "phone_number", "email", "first_name", "last_name", "is_customer", "password"]
-    
+        fields = [
+            "id",
+            "phone_number",
+            "email",
+            "first_name",
+            "last_name",
+            "is_customer",
+            "password",
+        ]
+
     def create(self, validated_data):
         password = validated_data.pop("password")
         user = super().create(validated_data)

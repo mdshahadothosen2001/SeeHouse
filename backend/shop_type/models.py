@@ -6,7 +6,7 @@ class ShopType(models.Model):
 
     def __str__(self):
         return self.shop_type
-    
+
     class Meta:
         verbose_name = "Shop Type"
         verbose_name_plural = "Shop types"

@@ -11,13 +11,17 @@ class Shop(TimeStamp):
     vendor = models.OneToOneField(Vendor, on_delete=models.CASCADE)
     shop_number = models.CharField(max_length=100, unique=True, null=True, blank=True)
     shop_name = models.CharField(max_length=100, unique=True)
-    shop_type = models.ForeignKey(ShopType, on_delete=models.DO_NOTHING, null=True, blank=True)
+    shop_type = models.ForeignKey(
+        ShopType, on_delete=models.DO_NOTHING, null=True, blank=True
+    )
     shop_title = models.CharField(max_length=100, null=True, blank=True)
     fields = models.CharField(max_length=100, null=True, blank=True)
     service_started = models.DateField(auto_now=False, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
     delivery_days = models.PositiveSmallIntegerField(null=True, blank=True)
-    cover_photo = models.ImageField(upload_to="images/uploads/shop_cover_photo", null=True, blank=True)
+    cover_photo = models.ImageField(
+        upload_to="images/uploads/shop_cover_photo", null=True, blank=True
+    )
     rating = models.FloatField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
 

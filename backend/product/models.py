@@ -13,7 +13,9 @@ class Product(CommonInfo):
     product_code = models.CharField(max_length=100, unique=True)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.DO_NOTHING)
     description = models.TextField()
-    product_thumbnail = models.ImageField(upload_to="images/uploads/%Y/%m/%d", null=True, blank=True)
+    product_thumbnail = models.ImageField(
+        upload_to="images/uploads/%Y/%m/%d", null=True, blank=True
+    )
     stock = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=12, decimal_places=2)
     rating = models.PositiveSmallIntegerField(null=True, blank=True)

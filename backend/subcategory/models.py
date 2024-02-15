@@ -9,7 +9,7 @@ class Subcategory(models.Model):
 
     def __str__(self):
         return self.subcategory_name
-    
+
     class Meta:
         verbose_name = "Subcategory"
         verbose_name_plural = "Subcategories"

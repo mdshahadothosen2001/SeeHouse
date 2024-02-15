@@ -8,12 +8,9 @@ class SubcategoryAdmin(admin.ModelAdmin):
         "id",
         "subcategory_name",
     )
-    list_display_links = (
-        "subcategory_name",
-    )
-    search_fields = (
-        "subcategory_name",
-    )
+    list_display_links = ("subcategory_name",)
+    search_fields = ("subcategory_name",)
     list_per_page = 25
+
 
 admin.site.register(Subcategory, SubcategoryAdmin)

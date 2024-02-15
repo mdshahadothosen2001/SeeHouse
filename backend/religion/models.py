@@ -6,7 +6,7 @@ class Religion(models.Model):
 
     def __str__(self):
         return self.religion_name
-    
+
     class Meta:
         verbose_name = "Religion"
         verbose_name_plural = "Religions"
