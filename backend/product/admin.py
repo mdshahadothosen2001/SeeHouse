@@ -4,6 +4,9 @@ from .models import Product
 
 
 class ProductAdmin(admin.ModelAdmin):
+    def subcategory(self, obj):
+        return obj.category.subcategory_name
+    
     list_display = (
         "id",
         "product_name",

@@ -4,9 +4,13 @@ from .models import Subcategory
 
 
 class SubcategoryAdmin(admin.ModelAdmin):
+    def category(self, obj):
+        return obj.category.category_name
+    
     list_display = (
         "id",
         "subcategory_name",
+        "category",
     )
     list_display_links = ("subcategory_name",)
     search_fields = ("subcategory_name",)
