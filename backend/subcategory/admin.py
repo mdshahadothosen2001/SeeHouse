@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Subcategory
+from .models import SubcategoryModel
 
 
 class SubcategoryAdmin(admin.ModelAdmin):
@@ -17,4 +17,4 @@ class SubcategoryAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(Subcategory, SubcategoryAdmin)
+admin.site.register(SubcategoryModel, SubcategoryAdmin)

@@ -1,10 +1,10 @@
 from django.db import models
 
-from category.models import Category
+from category.models import CategoryModel
 
 
-class Subcategory(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+class SubcategoryModel(models.Model):
+    category = models.ForeignKey(CategoryModel, on_delete=models.DO_NOTHING)
     subcategory_name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
