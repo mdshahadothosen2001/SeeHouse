@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import ShopType
+from .models import ShopTypeModel
 
 
 class ShopTypeAdmin(admin.ModelAdmin):
@@ -13,4 +13,4 @@ class ShopTypeAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(ShopType, ShopTypeAdmin)
+admin.site.register(ShopTypeModel, ShopTypeAdmin)

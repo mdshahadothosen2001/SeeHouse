@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class ShopType(models.Model):
+class ShopTypeModel(models.Model):
     shop_type = models.CharField(max_length=100)
 
     def __str__(self):
