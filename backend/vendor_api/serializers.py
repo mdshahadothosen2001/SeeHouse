@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from shop.models import Shop
+from shop.models import ShopModel
 
 
 class CreateServiceSerializer(serializers.ModelSerializer):
     """It is serializing data then save to shop model"""
 
     class Meta:
-        model = Shop
+        model = ShopModel
         fields = [
             "vendor",
             "shop_number",
@@ -26,5 +26,5 @@ class UpdateServiceSerializer(serializers.ModelSerializer):
     """It is serializing data then save to shop model for updating service information"""
 
     class Meta:
-        model = Shop
+        model = ShopModel
         fields = ["id", "shop_title", "fields", "about", "delivery_days"]

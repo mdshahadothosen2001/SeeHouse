@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 from .serializers import CreateServiceSerializer, UpdateServiceSerializer
-from shop_type.models import ShopType
-from shop.models import Shop
+from shop_type.models import ShopTypeModel
+from shop.models import ShopModel
 
 
 class CreateServiceView(APIView):
@@ -30,7 +30,7 @@ class CreateServiceView(APIView):
             raise ValidationError("Must fulfil the required value")
 
         shop_type = shop_type.upper()
-        shop_type_object = get_object_or_404(ShopType, shop_type=shop_type)
+        shop_type_object = get_object_or_404(ShopTypeModel, shop_type=shop_type)
 
         shop_data = {
             "vendor": vendor_id,
@@ -60,7 +60,7 @@ class ServiceView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        services = get_list_or_404(Shop)
+        services = get_list_or_404(ShopModel)
 
         service_data = []
         for service in services:
@@ -88,7 +88,7 @@ class ServiceUpdateView(APIView):
 
     def patch(self, request, *args, **kwargs):
 
-        instance = get_object_or_404(Shop, vendor=request.user.id)
+        instance = get_object_or_404(ShopModel, vendor=request.user.id)
         serializer = UpdateServiceSerializer(
             instance=instance, data=request.data, partial=True
         )

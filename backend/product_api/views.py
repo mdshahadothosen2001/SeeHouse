@@ -6,10 +6,10 @@ from rest_framework.views import APIView
 from django.shortcuts import get_list_or_404, get_object_or_404
 
 from .serializers import ProductSerializer, ProductUpdateSerializer
-from subcategory.models import Subcategory
-from category.models import Category
-from product.models import Product
-from shop.models import Shop
+from subcategory.models import SubcategoryModel
+from category.models import CategoryModel
+from product.models import ProductModel
+from shop.models import ShopModel
 
 
 class ProductView(APIView):
@@ -23,7 +23,7 @@ class ProductView(APIView):
         if not subcategory_id:
             raise ValidationError("Must Required subcategory_id")
 
-        products = get_list_or_404(Product, subcategory=subcategory_id)
+        products = get_list_or_404(ProductModel, subcategory=subcategory_id)
         products_data = []
 
         for product in products:
@@ -50,7 +50,7 @@ class ProductCategoryView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        categories = get_list_or_404(Category)
+        categories = get_list_or_404(CategoryModel)
 
         category_data = []
         for category in categories:
@@ -71,7 +71,7 @@ class ProductSubCategoryView(APIView):
         if not category_id:
             raise ValidationError("Must Required category_id")
 
-        subcategories = get_list_or_404(Subcategory, category=category_id)
+        subcategories = get_list_or_404(SubcategoryModel, category=category_id)
 
         subcategory_data = []
         for subcategory in subcategories:
@@ -107,9 +107,9 @@ class ProductCreateView(APIView):
                 "Must required shop_name and product_name and product_code and subcategory"
             )
 
-        shop_instance = get_list_or_404(Shop, shop_name=shop_name.upper())
+        shop_instance = get_list_or_404(ShopModel, shop_name=shop_name.upper())
         subcategory_instance = get_list_or_404(
-            Subcategory, subcategory_name=subcategory_name.upper()
+            SubcategoryModel, subcategory_name=subcategory_name.upper()
         )
 
         product_data = {
@@ -122,8 +122,6 @@ class ProductCreateView(APIView):
             "price": price,
             "rating": 0,
         }
-
-        print("................", product_data)
 
         serializer = ProductSerializer(data=product_data)
         if serializer.is_valid():
@@ -144,7 +142,7 @@ class ProductUpdateView(APIView):
         if not id:
             raise ValidationError("Must required product id")
 
-        product_instance = get_object_or_404(Product, id=id)
+        product_instance = get_object_or_404(ProductModel, id=id)
 
         serializer = ProductUpdateSerializer(
             instance=product_instance, data=request.data, partial=True

@@ -1,13 +1,13 @@
 from rest_framework import serializers
 
-from product.models import Product
+from product.models import ProductModel
 
 
 class ProductSerializer(serializers.ModelSerializer):
     """This class serializing data for product model"""
 
     class Meta:
-        model = Product
+        model = ProductModel
         fields = [
             "id",
             "shop",
@@ -25,5 +25,5 @@ class ProductUpdateSerializer(serializers.ModelSerializer):
     """This class serializing data for product model objects update"""
 
     class Meta:
-        model = Product
+        model = ProductModel
         fields = ["description", "stock", "price", "rating", "is_active"]

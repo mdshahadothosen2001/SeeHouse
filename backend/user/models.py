@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils.html import mark_safe
 
-from religion.models import Religion
+from religion.models import ReligionModel
 from utils.utils import PHONE_REGEX
 
 
@@ -67,7 +67,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     location_latitude = models.FloatField(null=True, blank=True)
     location_longitude = models.FloatField(null=True, blank=True)
     religion = models.ForeignKey(
-        Religion, on_delete=models.DO_NOTHING, null=True, blank=True
+        ReligionModel, on_delete=models.DO_NOTHING, null=True, blank=True
     )
 
     class MaritalStatus(models.TextChoices):
