@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Religion
+from .models import ReligionModel
 
 
 class ReligionAdmin(admin.ModelAdmin):
@@ -13,4 +13,4 @@ class ReligionAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(Religion, ReligionAdmin)
+admin.site.register(ReligionModel, ReligionAdmin)

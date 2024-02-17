@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Religion(models.Model):
+class ReligionModel(models.Model):
     religion_name = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
