@@ -1,9 +1,25 @@
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("vendor/", include("vendor_api.urls")),
-    path("customer/", include("customer_api.urls")),
-    path("product/", include("product_api.urls")),
+    path(
+        route="admin/",
+        view=admin.site.urls,
+        name="admin",
+    ),
+    path(
+        route="vendor/",
+        view=include("vendor_api.urls"),
+        name="vendor",
+    ),
+    path(
+        route="customer/",
+        view=include("customer_api.urls"),
+        name="customer",
+    ),
+    path(
+        route="product/",
+        view=include("product_api.urls"),
+        name="product",
+    ),
 ]
