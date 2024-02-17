@@ -1,9 +1,9 @@
 from django.db import models
 
-from country.models import Country
+from country.models import CountryModel
 
 
-class Address(models.Model):
+class AddressModel(models.Model):
     unit_number = models.CharField(max_length=100, null=True, blank=True)
     street_number = models.CharField(max_length=100, null=True, blank=True)
     address_line1 = models.TextField()
@@ -11,7 +11,7 @@ class Address(models.Model):
     city = models.CharField(max_length=100)
     region = models.CharField(max_length=100)
     postal_code = models.CharField(max_length=100)
-    country = models.ForeignKey(Country, on_delete=models.DO_NOTHING)
+    country = models.ForeignKey(CountryModel, on_delete=models.DO_NOTHING)
 
     def __str__(self):
         return self.address_line1

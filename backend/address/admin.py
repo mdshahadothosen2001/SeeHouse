@@ -1,9 +1,12 @@
 from django.contrib import admin
 
-from .models import Address
+from .models import AddressModel
 
 
 class AddressAdmin(admin.ModelAdmin):
+    def country(self, obj):
+        return obj.country.country_name
+    
     list_display = (
         "id",
         "unit_number",
@@ -38,4 +41,4 @@ class AddressAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(Address, AddressAdmin)
+admin.site.register(AddressModel, AddressAdmin)
