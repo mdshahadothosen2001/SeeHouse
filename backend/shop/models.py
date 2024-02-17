@@ -4,15 +4,15 @@ from django.utils.html import mark_safe
 
 from user.models import Vendor
 from utils.models import TimeStamp
-from shop_type.models import ShopType
+from shop_type.models import ShopTypeModel
 
 
-class Shop(TimeStamp):
+class ShopModel(TimeStamp):
     vendor = models.OneToOneField(Vendor, on_delete=models.CASCADE)
     shop_number = models.CharField(max_length=100, unique=True, null=True, blank=True)
     shop_name = models.CharField(max_length=100, unique=True)
     shop_type = models.ForeignKey(
-        ShopType, on_delete=models.DO_NOTHING, null=True, blank=True
+        ShopTypeModel, on_delete=models.DO_NOTHING, null=True, blank=True
     )
     shop_title = models.CharField(max_length=100, null=True, blank=True)
     fields = models.CharField(max_length=100, null=True, blank=True)

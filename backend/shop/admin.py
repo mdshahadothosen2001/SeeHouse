@@ -1,9 +1,15 @@
 from django.contrib import admin
 
-from .models import Shop
+from .models import ShopModel
 
 
 class ShopAdmin(admin.ModelAdmin):
+    def shop_type(self, obj):
+        return obj.shop_type.shop_type
+    
+    def user(self, obj):
+        return obj.vendor.phone_number
+    
     list_display = (
         "id",
         "vendor",
@@ -40,4 +46,4 @@ class ShopAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(Shop, ShopAdmin)
+admin.site.register(ShopModel, ShopAdmin)
