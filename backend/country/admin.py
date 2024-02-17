@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Country
+from .models import CountryModel
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -13,4 +13,4 @@ class CountryAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 
-admin.site.register(Country, CountryAdmin)
+admin.site.register(CountryModel, CountryAdmin)
