@@ -1,20 +1,20 @@
 from django.urls import path
 
 from .views import (
+    ProductCategoryListView,
     ProductView,
-    ProductCategoryView,
     ProductSubCategoryView,
     ProductCreateView,
     ProductUpdateView,
 )
 
 urlpatterns = [
+    # GET localhost/api/v1/category/
+    path(
+        route="category/", view=ProductCategoryListView.as_view(), name="product_category"
+    ),
     # GET localhost/product/
     path(route="", view=ProductView.as_view(), name="products"),
-    # GET localhost/product/category/
-    path(
-        route="category/", view=ProductCategoryView.as_view(), name="product_category"
-    ),
     # GET localhost/product/category/subcategory/
     path(
         route="category/subcategory/",

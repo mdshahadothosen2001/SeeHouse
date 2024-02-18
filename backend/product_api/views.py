@@ -5,11 +5,29 @@ from rest_framework.views import APIView
 
 from django.shortcuts import get_list_or_404, get_object_or_404
 
-from .serializers import ProductSerializer, ProductUpdateSerializer
+from .serializers import (
+    ProductCategoryModelSerializer,
+    ProductSerializer, 
+    ProductUpdateSerializer
+    )
 from subcategory.models import SubcategoryModel
 from category.models import CategoryModel
 from product.models import ProductModel
 from shop.models import ShopModel
+
+
+class ProductCategoryListView(APIView):
+    """This class used to return category list"""
+
+    permission_classes = [AllowAny]
+    serializer_class = ProductCategoryModelSerializer
+
+    def get(self, request, *args, **kwargs):
+
+        categories = get_list_or_404(CategoryModel)
+        serializer = self.serializer_class(categories, many=True)
+
+        return Response(serializer.data)
 
 
 class ProductView(APIView):
@@ -41,23 +59,6 @@ class ProductView(APIView):
             ]
 
         return Response({"product": products_data})
-
-
-class ProductCategoryView(APIView):
-    """This class used to return category list"""
-
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-
-        categories = get_list_or_404(CategoryModel)
-
-        category_data = []
-        for category in categories:
-            category_data += [
-                {"category_id": category.id, "category_name": category.category_name}
-            ]
-        return Response(category_data)
 
 
 class ProductSubCategoryView(APIView):
