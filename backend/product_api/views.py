@@ -9,7 +9,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import (
     ProductCategoryModelSerializer,
     ProductSubcategoryModelSerializer,
-    ProductSerializer,
+    ProductModelSerializer,
     ProductUpdateSerializer,
 )
 from subcategory.models import SubcategoryModel
@@ -45,7 +45,7 @@ class ProductSubCategoryListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ProductView(APIView):
+class ProductListView(APIView):
     """This class returns product categories and subcategories with products as nested"""
 
     permission_classes = [AllowAny]
@@ -56,24 +56,9 @@ class ProductView(APIView):
         if not subcategory_id:
             raise ValidationError("Must Required subcategory_id")
 
-        products = get_list_or_404(ProductModel, subcategory=subcategory_id)
-        products_data = []
-
-        for product in products:
-            products_data += [
-                {
-                    "id": product.id,
-                    "shop_name": product.shop.shop_name,
-                    "product_name": product.product_name,
-                    "product_code": product.product_code,
-                    "description": product.description,
-                    "stock": product.stock,
-                    "price": product.price,
-                    "rating": product.rating,
-                }
-            ]
-
-        return Response({"product": products_data})
+        products = ProductModel.objects.filter(subcategory_id=subcategory_id)
+        serializer = ProductModelSerializer(products, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProductCreateView(APIView):
@@ -117,7 +102,7 @@ class ProductCreateView(APIView):
             "rating": 0,
         }
 
-        serializer = ProductSerializer(data=product_data)
+        serializer = ProductModelSerializer(data=product_data)
         if serializer.is_valid():
             serializer.save()
             return Response({"success": "Created your product!"})

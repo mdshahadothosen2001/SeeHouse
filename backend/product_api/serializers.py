@@ -17,7 +17,7 @@ class ProductSubcategoryModelSerializer(serializers.ModelSerializer):
         fields = ["id", "subcategory_name"]
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductModelSerializer(serializers.ModelSerializer):
     """This class serializing data for product model"""
 
     class Meta:

@@ -3,7 +3,7 @@ from django.urls import path
 from .views import (
     ProductCategoryListView,
     ProductSubCategoryListView,
-    ProductView,
+    ProductListView,
     ProductCreateView,
     ProductUpdateView,
 )
@@ -15,14 +15,14 @@ urlpatterns = [
         view=ProductCategoryListView.as_view(),
         name="product_category",
     ),
-    # GET localhost/product/subcategory/
+    # GET localhost/api/v1/subcategory/
     path(
         route="subcategory/",
         view=ProductSubCategoryListView.as_view(),
         name="product_subcategory",
     ),
-    # GET localhost/product/
-    path(route="", view=ProductView.as_view(), name="products"),
+    # GET localhost/api/v1/products/
+    path(route="products/", view=ProductListView.as_view(), name="products"),
     # GET localhost/product/create/
     path(route="create/", view=ProductCreateView.as_view(), name="product_create"),
     # GET localhost/product/update/
