@@ -1,12 +1,20 @@
 from rest_framework import serializers
 
 from category.models import CategoryModel
+from subcategory.models import SubcategoryModel
 from product.models import ProductModel
+
 
 class ProductCategoryModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = CategoryModel
         fields = ["id", "category_name"]
+
+
+class ProductSubcategoryModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SubcategoryModel
+        fields = ["id", "subcategory_name"]
 
 
 class ProductSerializer(serializers.ModelSerializer):

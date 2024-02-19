@@ -8,9 +8,10 @@ from django.shortcuts import get_list_or_404, get_object_or_404
 
 from .serializers import (
     ProductCategoryModelSerializer,
-    ProductSerializer, 
-    ProductUpdateSerializer
-    )
+    ProductSubcategoryModelSerializer,
+    ProductSerializer,
+    ProductUpdateSerializer,
+)
 from subcategory.models import SubcategoryModel
 from category.models import CategoryModel
 from product.models import ProductModel
@@ -25,7 +26,23 @@ class ProductCategoryListView(APIView):
     def get(self, request, *args, **kwargs):
         categories = get_list_or_404(CategoryModel)
         serializer = ProductCategoryModelSerializer(categories, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ProductSubCategoryListView(APIView):
+    """This class take 'category_id' one argument and then response subcategory list"""
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+
+        category_id = request.data.get("category_id")
+        if not category_id:
+            raise ValidationError("Must Required category_id")
+
+        subcategories = SubcategoryModel.objects.filter(category_id=category_id)
+        serializer = ProductSubcategoryModelSerializer(subcategories, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProductView(APIView):
@@ -57,28 +74,6 @@ class ProductView(APIView):
             ]
 
         return Response({"product": products_data})
-
-
-class ProductSubCategoryView(APIView):
-    """This class take 'category_id' one argument and then response subcategory list"""
-
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-
-        category_id = request.data.get("category_id")
-        if not category_id:
-            raise ValidationError("Must Required category_id")
-
-        subcategories = get_list_or_404(SubcategoryModel, category=category_id)
-
-        subcategory_data = []
-        for subcategory in subcategories:
-            subcategory_data += [
-                {"id": subcategory.id, "subcategory_name": subcategory.subcategory_name}
-            ]
-
-        return Response({"subcategory": subcategory_data})
 
 
 class ProductCreateView(APIView):
