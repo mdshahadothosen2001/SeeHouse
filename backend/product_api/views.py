@@ -2,6 +2,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import status
 
 from django.shortcuts import get_list_or_404, get_object_or_404
 
@@ -20,13 +21,10 @@ class ProductCategoryListView(APIView):
     """This class used to return category list"""
 
     permission_classes = [AllowAny]
-    serializer_class = ProductCategoryModelSerializer
 
     def get(self, request, *args, **kwargs):
-
         categories = get_list_or_404(CategoryModel)
-        serializer = self.serializer_class(categories, many=True)
-
+        serializer = ProductCategoryModelSerializer(categories, many=True)
         return Response(serializer.data)
 
 
