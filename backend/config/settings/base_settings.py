@@ -12,7 +12,7 @@ SECRET_KEY = "django-insecure-)kknztu+yu_h@64$$cgxk4s56#na@3yvc*a^r)q91tkd)_h7c5
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'bf54-103-125-29-41.ngrok-free.app']
 
 DJANGO_APPS = [
     "django.contrib.admin",
@@ -26,6 +26,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
+    "corsheaders",
 ]
 
 LOCAL_APPS = [
@@ -141,3 +142,8 @@ AUTH_USER_MODEL = "user.UserAccount"
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://bf54-103-125-29-41.ngrok-free.app",
+]
