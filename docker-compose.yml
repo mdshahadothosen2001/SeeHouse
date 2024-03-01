@@ -37,11 +37,11 @@ services:
             sh -c "cd /app/backend &&
             python manage.py makemigrations --settings=config.settings.dev_settings &&
             python manage.py migrate --settings=config.settings.dev_settings &&
-            python manage.py runserver 0.0.0.0:8011 --settings=config.settings.dev_settings"
+            python manage.py runserver 0.0.0.0:8092 --settings=config.settings.dev_settings"
     volumes:
       - .:/app
     ports:
-      - "8011:8011"
+      - "8092:8092"
     depends_on:
       - db_seehouse
     env_file:
