@@ -1,7 +1,7 @@
 from django.urls import path, include
 
-from .views import (
-    ServiceView,
+from vendor_api.views.shop import (
+    ServiceListView,
     CreateServiceView,
     ServiceUpdateView,
 )
@@ -11,7 +11,7 @@ urlpatterns = [
     # GET localhost/vendor/service/
     path(
         route="service/",
-        view=ServiceView.as_view(),
+        view=ServiceListView.as_view(),
         name="services",
     ),
     # GET localhost/vendor/service/create/

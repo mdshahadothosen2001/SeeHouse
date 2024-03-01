@@ -2,12 +2,28 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.status import HTTP_200_OK
 
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 
-from .serializers import CreateServiceSerializer, UpdateServiceSerializer
+from vendor_api.serializers.shop import (
+    ServiceListSerializer,
+    CreateServiceSerializer,
+    UpdateServiceSerializer,
+)
 from shop_type.models import ShopTypeModel
 from shop.models import ShopModel
+
+
+class ServiceListView(APIView):
+    """This class response service list"""
+
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        services = ShopModel.objects.all()
+        serializer = ServiceListSerializer(services, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
 
 
 class CreateServiceView(APIView):
@@ -51,34 +67,6 @@ class CreateServiceView(APIView):
             return Response("Successfully created this service!")
         else:
             return Response({"error": serializer.errors})
-
-
-class ServiceView(APIView):
-    """This class response service list"""
-
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-
-        services = get_list_or_404(ShopModel)
-
-        service_data = []
-        for service in services:
-            service_data += [
-                {
-                    "vendor": service.vendor.first_name,
-                    "shop_name": service.shop_name,
-                    "shop_number": service.shop_number,
-                    "shop_type": service.shop_type.shop_type,
-                    "shop_title": service.shop_title,
-                    "fields": service.fields,
-                    "service_started": service.service_started,
-                    "about": service.about,
-                    "rating": service.rating,
-                }
-            ]
-
-        return Response({"service": service_data})
 
 
 class ServiceUpdateView(APIView):
