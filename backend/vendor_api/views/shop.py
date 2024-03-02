@@ -14,6 +14,7 @@ from vendor_api.serializers.shop import (
 )
 from shop_type.models import ShopTypeModel
 from shop.models import ShopModel
+from utils.utils import tokenValidation
 
 
 class ServiceListView(APIView):
@@ -80,13 +81,16 @@ class ServiceUpdateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def patch(self, request, *args, **kwargs):
+        payload = tokenValidation(request)
+        if payload.get("user_type") == "VENDOR":
 
-        instance = get_object_or_404(ShopModel, vendor=request.user.id)
-        serializer = UpdateServiceSerializer(
-            instance=instance, data=request.data, partial=True
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response("Your information has been updated!")
-        else:
-            return Response({"error": serializer.errors})
+            instance = ShopModel.objects.get(vendor=request.user.id)
+            serializer = UpdateServiceSerializer(
+                instance=instance, data=request.data, partial=True
+            )
+            if serializer.is_valid():
+                serializer.save()
+                return Response("Your shop information has been updated!")
+            else:
+                return Response("Please provide valid data")
+        return Response("You have no permission to update product")
