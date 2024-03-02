@@ -7,9 +7,9 @@ from rest_framework import status
 from django.shortcuts import get_list_or_404
 
 from .serializers import (
-    ProductCategorySerializer,
-    ProductSubcategorySerializer,
-    ProductModelSerializer,
+    ProductCategoryListSerializer,
+    ProductSubcategoryListSerializer,
+    ProductListSerializer,
     ProductUpdateSerializer,
 )
 from subcategory.models import SubcategoryModel
@@ -26,7 +26,7 @@ class ProductCategoryListView(APIView):
 
     def get(self, request, *args, **kwargs):
         categories = CategoryModel.objects.all()
-        serializer = ProductCategorySerializer(categories, many=True)
+        serializer = ProductCategoryListSerializer(categories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -42,7 +42,7 @@ class ProductSubCategoryListView(APIView):
             raise ValidationError("Must Required category_id")
 
         subcategories = SubcategoryModel.objects.filter(category_id=category_id)
-        serializer = ProductSubcategorySerializer(subcategories, many=True)
+        serializer = ProductSubcategoryListSerializer(subcategories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -58,7 +58,7 @@ class ProductListView(APIView):
             raise ValidationError("Must Required subcategory_id")
 
         products = ProductModel.objects.filter(subcategory_id=subcategory_id)
-        serializer = ProductModelSerializer(products, many=True)
+        serializer = ProductListSerializer(products, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -103,7 +103,7 @@ class ProductCreateView(APIView):
             "rating": 0,
         }
 
-        serializer = ProductModelSerializer(data=product_data)
+        serializer = ProductListSerializer(data=product_data)
         if serializer.is_valid():
             serializer.save()
             return Response({"success": "Created your product!"})
