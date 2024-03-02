@@ -16,6 +16,7 @@ from subcategory.models import SubcategoryModel
 from category.models import CategoryModel
 from product.models import ProductModel
 from shop.models import ShopModel
+from utils.utils import tokenValidation
 
 
 class ProductCategoryListView(APIView):
@@ -86,7 +87,7 @@ class ProductCreateView(APIView):
                 "Must required shop_name and product_name and product_code and subcategory"
             )
 
-        shop_instance = get_list_or_404(ShopModel, shop_name=shop_name.upper())
+        shop_instance = get_list_or_404(ShopModel, shop_name=shop_name)
         subcategory_instance = get_list_or_404(
             SubcategoryModel, subcategory_name=subcategory_name.upper()
         )
@@ -116,19 +117,19 @@ class ProductUpdateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def patch(self, request, *args, **kwargs):
-        id = request.data.get("id")
+        payload = tokenValidation(request)
+        if payload.get("user_type") == "VENDOR":
+            id = request.data.get("id")
 
-        if not id:
-            raise ValidationError("Must required product id")
+            if not id:
+                raise ValidationError("Must required product id")
 
-        product_instance = get_object_or_404(ProductModel, id=id)
+            instance = ProductModel.objects.get(id=id)
 
-        serializer = ProductUpdateSerializer(
-            instance=product_instance, data=request.data, partial=True
-        )
-        print(serializer.is_valid(), serializer)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"success": "Updated your product!"})
-        else:
-            return Response({"error": serializer.errors})
+            serializer = ProductUpdateSerializer(instance, request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                return Response("Updated your product!")
+            else:
+                return Response("Please provides valid data")
+        return Response("You have no permission to create product")
