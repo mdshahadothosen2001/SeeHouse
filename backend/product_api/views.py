@@ -4,8 +4,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from django.shortcuts import get_list_or_404
-
 from .serializers import (
     ProductCategoryListSerializer,
     ProductSubcategoryListSerializer,
@@ -15,7 +13,6 @@ from .serializers import (
 from subcategory.models import SubcategoryModel
 from category.models import CategoryModel
 from product.models import ProductModel
-from shop.models import ShopModel
 from utils.utils import tokenValidation
 
 
@@ -68,47 +65,45 @@ class ProductCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        payload = tokenValidation(request)
+        if payload.get("user_type") == "VENDOR":
 
-        shop_name = request.data.get("shop_name")
-        product_name = request.data.get("product_name")
-        product_code = request.data.get("product_code")
-        subcategory_name = request.data.get("subcategory_name")
-        description = request.data.get("description")
-        stock = request.data.get("stock")
-        price = request.data.get("price")
+            shop_id = request.data.get("shop_id")
+            product_name = request.data.get("product_name")
+            product_code = request.data.get("product_code")
+            subcategory_id = request.data.get("subcategory_id")
+            description = request.data.get("description")
+            stock = request.data.get("stock")
+            price = request.data.get("price")
 
-        if (
-            not shop_name
-            or not product_name
-            or not product_code
-            or not subcategory_name
-        ):
-            raise ValidationError(
-                "Must required shop_name and product_name and product_code and subcategory"
-            )
+            if (
+                not shop_id
+                or not product_name
+                or not product_code
+                or not subcategory_id
+            ):
+                raise ValidationError(
+                    "Must required shop_id and product_name and product_code and subcategory_id"
+                )
 
-        shop_instance = get_list_or_404(ShopModel, shop_name=shop_name)
-        subcategory_instance = get_list_or_404(
-            SubcategoryModel, subcategory_name=subcategory_name.upper()
-        )
+            product = {
+                "shop": shop_id,
+                "product_name": product_name,
+                "product_code": product_code,
+                "subcategory": subcategory_id,
+                "description": description,
+                "stock": stock,
+                "price": price,
+                "rating": 0,
+            }
 
-        product_data = {
-            "shop": shop_instance[0].id,
-            "product_name": product_name,
-            "product_code": product_code,
-            "subcategory": subcategory_instance[0].id,
-            "description": description,
-            "stock": stock,
-            "price": price,
-            "rating": 0,
-        }
-
-        serializer = ProductListSerializer(data=product_data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"success": "Created your product!"})
-        else:
-            return Response({"error": serializer.errors})
+            serializer = ProductListSerializer(data=product)
+            if serializer.is_valid():
+                serializer.save()
+                return Response("Created your product!")
+            else:
+                return Response("Please provides valid data")
+        return Response("You have no permission to create product")
 
 
 class ProductUpdateView(APIView):
@@ -132,4 +127,4 @@ class ProductUpdateView(APIView):
                 return Response("Updated your product!")
             else:
                 return Response("Please provides valid data")
-        return Response("You have no permission to create product")
+        return Response("You have no permission to update product")
