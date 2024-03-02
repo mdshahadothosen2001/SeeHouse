@@ -8,7 +8,7 @@ from django.shortcuts import get_list_or_404
 
 from .serializers import (
     ProductCategorySerializer,
-    ProductSubcategoryModelSerializer,
+    ProductSubcategorySerializer,
     ProductModelSerializer,
     ProductUpdateSerializer,
 )
@@ -42,7 +42,7 @@ class ProductSubCategoryListView(APIView):
             raise ValidationError("Must Required category_id")
 
         subcategories = SubcategoryModel.objects.filter(category_id=category_id)
-        serializer = ProductSubcategoryModelSerializer(subcategories, many=True)
+        serializer = ProductSubcategorySerializer(subcategories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

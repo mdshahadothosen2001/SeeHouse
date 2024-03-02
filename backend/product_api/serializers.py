@@ -11,7 +11,7 @@ class ProductCategorySerializer(serializers.ModelSerializer):
         fields = ["id", "category_name"]
 
 
-class ProductSubcategoryModelSerializer(serializers.ModelSerializer):
+class ProductSubcategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = SubcategoryModel
         fields = ["id", "subcategory_name"]
