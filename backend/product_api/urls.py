@@ -9,22 +9,22 @@ from .views import (
 )
 
 urlpatterns = [
-    # GET localhost/api/v1/category/
+    # GET localhost:8092/product/
+    path(route="", view=ProductListView.as_view(), name="products"),
+    # GET localhost:8092/product/category/
     path(
         route="category/",
         view=ProductCategoryListView.as_view(),
         name="product_category",
     ),
-    # GET localhost/api/v1/subcategory/
+    # GET localhost:8092/product/subcategory/
     path(
         route="subcategory/",
         view=ProductSubCategoryListView.as_view(),
         name="product_subcategory",
     ),
-    # GET localhost/api/v1/products/
-    path(route="products/", view=ProductListView.as_view(), name="products"),
-    # GET localhost/product/create/
+    # POST localhost:8092/product/create/
     path(route="create/", view=ProductCreateView.as_view(), name="product_create"),
-    # GET localhost/product/update/
+    # PATCH localhost:8092/product/update/
     path(route="update/", view=ProductUpdateView.as_view(), name="product_update"),
 ]

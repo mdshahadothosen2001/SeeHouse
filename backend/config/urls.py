@@ -20,7 +20,7 @@ urlpatterns = [
         name="customer",
     ),
     path(
-        route="api/v1/",
+        route="product/",
         view=include("product_api.urls"),
         name="product",
     ),

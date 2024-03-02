@@ -7,12 +7,10 @@ from .views import (
 
 
 urlpatterns = [
-    # POST: localhost:8000/vendor/token/
-    path(
-        route="token/", view=MyTokenObtainPairView.as_view(), name="token_obtain_pair"
-    ),
-    # localhost:8000/vendor/token/refresh/
-    path(route="token/refresh/", view=TokenRefreshView.as_view(), name="token_refresh"),
-    # GET: localhost:8000/vendor/login/
+    # POST: localhost:8092/vendor/token/
+    path(route="", view=MyTokenObtainPairView.as_view(), name="token_obtain_pair"),
+    # POST: localhost:8092/vendor/token/refresh/
+    path(route="refresh/", view=TokenRefreshView.as_view(), name="token_refresh"),
+    # GET: localhost:8092/vendor/token/login/
     path(route="login/", view=login_view.as_view(), name="login"),
 ]

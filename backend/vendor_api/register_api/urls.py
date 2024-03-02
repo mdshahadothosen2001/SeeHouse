@@ -4,6 +4,6 @@ from .views import VendorRegisterView
 
 
 urlpatterns = [
-    # POST localhost/vendor/register/
-    path(route="register/", view=VendorRegisterView.as_view(), name="vendor_register"),
+    # POST localhost:8092/vendor/register/
+    path(route="", view=VendorRegisterView.as_view(), name="vendor_register"),
 ]

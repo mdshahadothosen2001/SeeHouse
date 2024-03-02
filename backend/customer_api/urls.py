@@ -4,11 +4,11 @@ from .views import CustomerRegisterView
 
 
 urlpatterns = [
-    # POST localhost/customer/register/
+    # POST localhost:8092/customer/register/
     path(
         route="register/",
         view=CustomerRegisterView.as_view(),
         name="customer_register",
     ),
-    path("", include("customer_api.token_api.urls")),
+    path("token/", include("customer_api.token_api.urls")),
 ]
