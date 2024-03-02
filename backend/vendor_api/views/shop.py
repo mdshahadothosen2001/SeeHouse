@@ -85,9 +85,9 @@ class ServiceUpdateView(APIView):
 
     def patch(self, request, *args, **kwargs):
         payload = tokenValidation(request)
-        if payload.get("user_type") == "VENDOR":
+        if payload.get("is_vendor") == True:
 
-            instance = ShopModel.objects.get(vendor=request.user.id)
+            instance = ShopModel.objects.get(vendor=payload.get("user_id"))
             serializer = UpdateServiceSerializer(
                 instance=instance, data=request.data, partial=True
             )
