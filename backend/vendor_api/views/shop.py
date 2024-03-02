@@ -4,7 +4,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK
 
-from django.shortcuts import get_object_or_404
 from django.core.cache import cache
 
 from vendor_api.serializers.shop import (
@@ -12,7 +11,6 @@ from vendor_api.serializers.shop import (
     CreateServiceSerializer,
     UpdateServiceSerializer,
 )
-from shop_type.models import ShopTypeModel
 from shop.models import ShopModel
 from utils.utils import tokenValidation
 
@@ -38,41 +36,46 @@ class CreateServiceView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        payload = tokenValidation(request)
+        if payload.get("is_vendor") == True:
+            vendor_id = payload.get("user_id")
+            shop_number = request.data.get("shop_number")
+            shop_name = request.data.get("shop_name")
+            shop_title = request.data.get("shop_title")
+            fields = request.data.get("fields")
+            service_started = request.data.get("service_started")
+            about = request.data.get("about")
+            shop_type_id = request.data.get("shop_type_id")
 
-        vendor_id = request.user.id
-        shop_number = request.data.get("shop_number")
-        shop_name = request.data.get("shop_name")
-        shop_title = request.data.get("shop_title")
-        fields = request.data.get("fields")
-        service_started = request.data.get("service_started")
-        about = request.data.get("about")
-        shop_type = request.data.get("shop_type")
+            if (
+                not shop_name
+                or not shop_number
+                or not shop_type_id
+                or not service_started
+            ):
+                raise ValidationError(
+                    "Must required shop_name, shop_number, shop_type_id, service_started"
+                )
 
-        if not shop_name or not shop_number or not shop_type or not service_started:
-            raise ValidationError("Must fulfil the required value")
+            shop_data = {
+                "vendor": vendor_id,
+                "shop_name": shop_name.upper(),
+                "shop_number": shop_number,
+                "shop_type": shop_type_id,
+                "shop_title": shop_title,
+                "fields": fields,
+                "about": about,
+                "service_started": service_started,
+                "rating": 0,
+                "is_active": True,
+            }
 
-        shop_type = shop_type.upper()
-        shop_type_object = get_object_or_404(ShopTypeModel, shop_type=shop_type)
-
-        shop_data = {
-            "vendor": vendor_id,
-            "shop_name": shop_name.upper(),
-            "shop_number": shop_number,
-            "shop_type": shop_type_object.id,
-            "shop_title": shop_title,
-            "fields": fields,
-            "about": about,
-            "service_started": service_started,
-            "rating": 0,
-            "is_active": True,
-        }
-
-        serializer = CreateServiceSerializer(data=shop_data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response("Successfully created this service!")
-        else:
-            return Response({"error": serializer.errors})
+            serializer = CreateServiceSerializer(data=shop_data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response("Successfully created this service!")
+            else:
+                return Response("Please provides valid data")
 
 
 class ServiceUpdateView(APIView):
