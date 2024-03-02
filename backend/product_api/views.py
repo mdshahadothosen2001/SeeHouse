@@ -4,10 +4,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_list_or_404
 
 from .serializers import (
-    ProductCategoryModelSerializer,
+    ProductCategorySerializer,
     ProductSubcategoryModelSerializer,
     ProductModelSerializer,
     ProductUpdateSerializer,
@@ -25,8 +25,8 @@ class ProductCategoryListView(APIView):
     permission_classes = [AllowAny]
 
     def get(self, request, *args, **kwargs):
-        categories = get_list_or_404(CategoryModel)
-        serializer = ProductCategoryModelSerializer(categories, many=True)
+        categories = CategoryModel.objects.all()
+        serializer = ProductCategorySerializer(categories, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
