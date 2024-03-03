@@ -3,7 +3,7 @@ from rest_framework import serializers
 from user.models import Vendor
 
 
-class VendorSerializer(serializers.ModelSerializer):
+class VendorCreateSerializer(serializers.ModelSerializer):
     """This class serializing the data for new creating vendor user"""
 
     password = serializers.CharField(write_only=True)

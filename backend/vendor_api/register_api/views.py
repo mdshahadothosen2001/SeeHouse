@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from django.db.models import Q
 
-from .serializers import VendorSerializer
+from .serializers import VendorCreateSerializer
 from user.models import UserAccount
 
 
@@ -44,7 +44,7 @@ class VendorRegisterView(APIView):
             "password": password,
         }
 
-        serializer = VendorSerializer(data=vendor_data)
+        serializer = VendorCreateSerializer(data=vendor_data)
         if serializer.is_valid():
             serializer.save()
             return Response("Completed your registration process")
