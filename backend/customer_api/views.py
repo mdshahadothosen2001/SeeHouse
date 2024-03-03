@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from django.db.models import Q
 
-from .serializers import CustomerSerializer
+from .serializers import CustomerCreateSerializer
 from user.models import UserAccount
 
 
@@ -42,7 +42,7 @@ class CustomerRegisterView(APIView):
             "password": password,
         }
 
-        serializer = CustomerSerializer(data=customer_data)
+        serializer = CustomerCreateSerializer(data=customer_data)
         if serializer.is_valid():
             serializer.save()
 

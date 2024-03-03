@@ -3,7 +3,7 @@ from rest_framework import serializers
 from user.models import Customer
 
 
-class CustomerSerializer(serializers.ModelSerializer):
+class CustomerCreateSerializer(serializers.ModelSerializer):
     """This serializer class used to serializing the customer model"""
 
     password = serializers.CharField(write_only=True)
