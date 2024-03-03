@@ -31,7 +31,6 @@ class ProductListSerializer(serializers.ModelSerializer):
             "description",
             "stock",
             "price",
-            "rating",
         ]
 
 

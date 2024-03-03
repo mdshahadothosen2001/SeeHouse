@@ -18,7 +18,7 @@ class ProductModel(CommonInfo):
     )
     stock = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=12, decimal_places=2)
-    rating = models.PositiveSmallIntegerField(null=True, blank=True)
+    rating = models.PositiveSmallIntegerField(default=0)
 
     def thumbnail(self):
         if self.product_thumbnail != "":

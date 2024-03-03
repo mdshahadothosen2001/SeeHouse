@@ -67,37 +67,7 @@ class ProductCreateView(APIView):
     def post(self, request, *args, **kwargs):
         payload = tokenValidation(request)
         if payload.get("user_type") == "VENDOR":
-
-            shop_id = request.data.get("shop_id")
-            product_name = request.data.get("product_name")
-            product_code = request.data.get("product_code")
-            subcategory_id = request.data.get("subcategory_id")
-            description = request.data.get("description")
-            stock = request.data.get("stock")
-            price = request.data.get("price")
-
-            if (
-                not shop_id
-                or not product_name
-                or not product_code
-                or not subcategory_id
-            ):
-                raise ValidationError(
-                    "Must required shop_id and product_name and product_code and subcategory_id"
-                )
-
-            product = {
-                "shop": shop_id,
-                "product_name": product_name,
-                "product_code": product_code,
-                "subcategory": subcategory_id,
-                "description": description,
-                "stock": stock,
-                "price": price,
-                "rating": 0,
-            }
-
-            serializer = ProductListSerializer(data=product)
+            serializer = ProductListSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response("Created your product!")
