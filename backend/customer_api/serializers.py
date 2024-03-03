@@ -14,8 +14,6 @@ class CustomerCreateSerializer(serializers.ModelSerializer):
             "id",
             "phone_number",
             "email",
-            "first_name",
-            "last_name",
             "is_customer",
             "password",
         ]
