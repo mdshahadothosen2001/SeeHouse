@@ -14,9 +14,6 @@ class VendorCreateSerializer(serializers.ModelSerializer):
             "id",
             "phone_number",
             "email",
-            "first_name",
-            "last_name",
-            "tin_number",
             "is_vendor",
             "password",
         ]

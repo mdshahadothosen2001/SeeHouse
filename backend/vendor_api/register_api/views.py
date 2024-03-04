@@ -17,9 +17,6 @@ class VendorRegisterView(APIView):
     def post(self, request, *args, **kwargs):
         phone_number = request.data.get("phone_number")
         email = request.data.get("email")
-        first_name = request.data.get("first_name")
-        last_name = request.data.get("last_name")
-        tin_number = request.data.get("tin_number")
         password = request.data.get("password")
 
         if not phone_number or not email or not password:
@@ -37,9 +34,6 @@ class VendorRegisterView(APIView):
         vendor_data = {
             "phone_number": phone_number,
             "email": email,
-            "first_name": first_name,
-            "last_name": last_name,
-            "tin_number": tin_number,
             "is_vendor": True,
             "password": password,
         }
