@@ -1,4 +1,3 @@
-from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -39,43 +38,15 @@ class CreateServiceView(APIView):
         payload = tokenValidation(request)
         if payload.get("is_vendor") == True:
             vendor_id = payload.get("user_id")
-            shop_number = request.data.get("shop_number")
-            shop_name = request.data.get("shop_name")
-            shop_title = request.data.get("shop_title")
-            fields = request.data.get("fields")
-            service_started = request.data.get("service_started")
-            about = request.data.get("about")
-            shop_type_id = request.data.get("shop_type_id")
-
-            if (
-                not shop_name
-                or not shop_number
-                or not shop_type_id
-                or not service_started
-            ):
-                raise ValidationError(
-                    "Must required shop_name, shop_number, shop_type_id, service_started"
-                )
-
-            shop_data = {
-                "vendor": vendor_id,
-                "shop_name": shop_name.upper(),
-                "shop_number": shop_number,
-                "shop_type": shop_type_id,
-                "shop_title": shop_title,
-                "fields": fields,
-                "about": about,
-                "service_started": service_started,
-                "rating": 0,
-                "is_active": True,
-            }
-
-            serializer = CreateServiceSerializer(data=shop_data)
+            serializer = CreateServiceSerializer(
+                data={**request.data, "vendor": vendor_id}
+            )
             if serializer.is_valid():
                 serializer.save()
                 return Response("Successfully created this service!")
             else:
                 return Response("Please provides valid data")
+        return Response("You have no permission to update product")
 
 
 class ServiceUpdateView(APIView):

@@ -22,8 +22,8 @@ class ShopModel(TimeStamp):
     cover_photo = models.ImageField(
         upload_to="images/uploads/shop_cover_photo", null=True, blank=True
     )
-    rating = models.FloatField(null=True, blank=True)
-    is_active = models.BooleanField(default=False)
+    rating = models.FloatField(default=0)
+    is_active = models.BooleanField(default=True)
 
     def cover_image(self):
         if self.cover_photo != "":
