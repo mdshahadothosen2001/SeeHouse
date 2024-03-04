@@ -23,7 +23,6 @@ class VendorRegisterView(APIView):
             raise ValidationError("Must required phone_number and email and password")
 
         # check this phone_number exists or email using complex query with OR operation,
-        # if any exists return
         is_member = UserAccount.objects.filter(
             Q(phone_number=phone_number) | Q(email=email)
         ).values()
@@ -31,14 +30,7 @@ class VendorRegisterView(APIView):
             if len(is_member) != 0:
                 return Response("You have already account at SeeHouse")
 
-        vendor_data = {
-            "phone_number": phone_number,
-            "email": email,
-            "is_vendor": True,
-            "password": password,
-        }
-
-        serializer = VendorCreateSerializer(data=vendor_data)
+        serializer = VendorCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response("Completed your registration process")

@@ -22,6 +22,7 @@ class VendorCreateSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
         user = super().create(validated_data)
         user.set_password(password)
+        user.is_vendor = True
         user.save()
 
         return user
