@@ -15,12 +15,24 @@ class CustomerRegisterView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
-        serializer = CustomerCreateSerializer(
-            data={**request.data, "is_customer": True}
-        )
+        phone_number = request.data.get("phone_number")
+        email = request.data.get("email")
+        password = request.data.get("password")
+
+        if not phone_number or not email or not password:
+            raise ValidationError("Must required phone_number and email and password")
+
+        # check this phone_number exists or email using complex query with OR operation,
+        is_member = UserAccount.objects.filter(
+            Q(phone_number=phone_number) | Q(email=email)
+        ).values()
+        if is_member:
+            if len(is_member) != 0:
+                return Response("You have already account at SeeHouse")
+
+        serializer = CustomerCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            return Response("Completed your registration process")
 
-            return Response("Completed your registration process!")
-
-        return Response("Incompleted registration, Please provide valid data")
+        return Response("Incompleted your registration process")

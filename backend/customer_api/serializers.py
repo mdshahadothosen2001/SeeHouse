@@ -22,6 +22,7 @@ class CustomerCreateSerializer(serializers.ModelSerializer):
         password = validated_data.pop("password")
         user = super().create(validated_data)
         user.set_password(password)
+        user.is_customer = True
         user.save()
 
         return user
