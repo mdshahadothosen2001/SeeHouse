@@ -50,7 +50,7 @@ class ProductListView(APIView):
 
     def get(self, request, *args, **kwargs):
 
-        subcategory_id = request.data.get("subcategory_id")
+        subcategory_id = request.query_params.get("subcategory_id")
         if not subcategory_id:
             raise ValidationError("Must Required subcategory_id")
 
