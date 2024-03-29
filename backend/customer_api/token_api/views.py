@@ -20,7 +20,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["first_name"] = user.first_name
         token["last_name"] = user.last_name
         token["user_type"] = user.user_type
-        token["is_customer"] = user.is_customer
+        token["is_vendor"] = user.is_vendor
         token["current_date"] = datetime.now().strftime("%Y:%m:%d")
         current_time = datetime.now().strftime("%I:%M:%p")
         token["current_time"] = current_time
