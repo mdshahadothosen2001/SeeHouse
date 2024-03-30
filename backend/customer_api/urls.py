@@ -1,6 +1,7 @@
 from django.urls import path, include
 
 from .views.register import CustomerRegisterView
+from .views.login import CustomTokenObtainPairView
 
 
 urlpatterns = [
@@ -10,5 +11,10 @@ urlpatterns = [
         view=CustomerRegisterView.as_view(),
         name="customer_register",
     ),
-    path("token/", include("customer_api.token_api.urls")),
+    # POST localhost:8092/customer/login/
+    path(
+        route="login/",
+        view=CustomTokenObtainPairView.as_view(),
+        name="customer_login",
+    ),
 ]

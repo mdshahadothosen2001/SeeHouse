@@ -21,6 +21,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["last_name"] = user.last_name
         token["user_type"] = user.user_type
         token["is_vendor"] = user.is_vendor
+        token["is_staff"] = user.is_staff
         token["current_date"] = datetime.now().strftime("%Y:%m:%d")
         current_time = datetime.now().strftime("%I:%M:%p")
         token["current_time"] = current_time
@@ -33,7 +34,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
 
-class MyTokenObtainPairView(TokenObtainPairView):
+class CustomTokenObtainPairView(TokenObtainPairView):
     """User can get access token and refresh token by thier email and password"""
 
     serializer_class = CustomTokenObtainPairSerializer
@@ -54,14 +55,3 @@ class MyTokenObtainPairView(TokenObtainPairView):
         request.session["token"] = token
 
         return Response(token_data)
-
-
-class login_view(APIView):
-    """User can loggin with access token"""
-
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, *args, **kwargs):
-        """Used to return success message"""
-
-        return Response({"message": "Welcome to the SeeHouse!"})
