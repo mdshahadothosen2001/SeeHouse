@@ -1,3 +1,5 @@
+from rest_framework_simplejwt.views import TokenRefreshView
+
 from django.urls import path, include
 
 from .views.register import CustomerRegisterView
@@ -16,5 +18,11 @@ urlpatterns = [
         route="login/",
         view=CustomTokenObtainPairView.as_view(),
         name="customer_login",
+    ),
+    # POST localhost:8092/customer/login/refresh/
+    path(
+        route="login/refresh/",
+        view=TokenRefreshView.as_view(),
+        name="customer_login_refresh",
     ),
 ]
