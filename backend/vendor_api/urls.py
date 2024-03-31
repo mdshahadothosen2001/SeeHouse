@@ -6,8 +6,16 @@ from vendor_api.views.shop import (
     ServiceUpdateView,
 )
 
+from .views.token import CustomTokenObtainPairView
+
 
 urlpatterns = [
+    # PATCH localhost:8092/vendor/login/
+    path(
+        route="login/",
+        view=CustomTokenObtainPairView.as_view(),
+        name="vendor_login",
+    ),
     # GET localhost:8092/vendor/service/
     path(
         route="service/",
@@ -26,6 +34,5 @@ urlpatterns = [
         view=ServiceUpdateView.as_view(),
         name="service_update",
     ),
-    path("token/", include("vendor_api.token_api.urls")),
     path("register/", include("vendor_api.register_api.urls")),
 ]
