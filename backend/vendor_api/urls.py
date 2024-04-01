@@ -1,3 +1,5 @@
+from rest_framework_simplejwt.views import TokenRefreshView
+
 from django.urls import path, include
 
 from vendor_api.views.shop import (
@@ -10,11 +12,17 @@ from .views.token import CustomTokenObtainPairView
 
 
 urlpatterns = [
-    # PATCH localhost:8092/vendor/login/
+    # POST localhost:8092/vendor/login/
     path(
         route="login/",
         view=CustomTokenObtainPairView.as_view(),
         name="vendor_login",
+    ),
+    # POST localhost:8092/vendor/login/refresh/
+    path(
+        route="login/refresh/",
+        view=TokenRefreshView.as_view(),
+        name="vendor_login_refresh",
     ),
     # GET localhost:8092/vendor/service/
     path(
