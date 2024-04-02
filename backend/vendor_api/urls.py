@@ -8,10 +8,17 @@ from vendor_api.views.shop import (
     ServiceUpdateView,
 )
 
+from .views.register import VendorRegisterView
 from .views.token import CustomTokenObtainPairView
 
 
 urlpatterns = [
+    # POST localhost:8092/vendor/register/
+    path(
+        route="register/",
+        view=VendorRegisterView.as_view(),
+        name="vendor_register",
+    ),
     # POST localhost:8092/vendor/login/
     path(
         route="login/",
@@ -42,5 +49,4 @@ urlpatterns = [
         view=ServiceUpdateView.as_view(),
         name="service_update",
     ),
-    path("register/", include("vendor_api.register_api.urls")),
 ]
