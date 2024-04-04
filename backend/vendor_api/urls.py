@@ -3,13 +3,13 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from django.urls import path, include
 
 from vendor_api.views.shop import (
-    CreateServiceView,
     ServiceUpdateView,
 )
 
 from .views.register import VendorRegisterView
 from .views.token import CustomTokenObtainPairView
 from .views.service import ServiceListView
+from .views.register_service import CreateServiceByVendorView
 
 
 urlpatterns = [
@@ -40,7 +40,7 @@ urlpatterns = [
     # POST localhost:8092/vendor/service/create/
     path(
         route="service/create/",
-        view=CreateServiceView.as_view(),
+        view=CreateServiceByVendorView.as_view(),
         name="service_create",
     ),
     # PATCH localhost:8092/vendor/service/update/

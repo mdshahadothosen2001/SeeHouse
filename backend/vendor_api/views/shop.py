@@ -4,31 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK
 
 from vendor_api.serializers.shop import (
-    CreateServiceSerializer,
     UpdateServiceSerializer,
 )
 from shop.models import ShopModel
 from utils.utils import tokenValidation
-
-
-class CreateServiceView(APIView):
-    """This class used to creating new shop that means service"""
-
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, *args, **kwargs):
-        payload = tokenValidation(request)
-        if payload.get("is_vendor") == True:
-            vendor_id = payload.get("user_id")
-            serializer = CreateServiceSerializer(
-                data={**request.data, "vendor": vendor_id}
-            )
-            if serializer.is_valid():
-                serializer.save()
-                return Response("Successfully created this service!")
-            else:
-                return Response("Please provides valid data")
-        return Response("You have no permission to update product")
 
 
 class ServiceUpdateView(APIView):
