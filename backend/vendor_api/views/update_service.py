@@ -3,14 +3,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.status import HTTP_200_OK
 
-from vendor_api.serializers.shop import (
-    UpdateServiceSerializer,
-)
 from shop.models import ShopModel
 from utils.utils import tokenValidation
+from ..serializers.update_service import UpdateServiceByVendorSerializer
 
 
-class ServiceUpdateView(APIView):
+class UpdateServiceByVendorView(APIView):
     """This class permit to update their information about service"""
 
     permission_classes = [IsAuthenticated]
@@ -20,7 +18,7 @@ class ServiceUpdateView(APIView):
         if payload.get("is_vendor") == True:
 
             instance = ShopModel.objects.get(vendor=payload.get("user_id"))
-            serializer = UpdateServiceSerializer(
+            serializer = UpdateServiceByVendorSerializer(
                 instance=instance, data=request.data, partial=True
             )
             if serializer.is_valid():
