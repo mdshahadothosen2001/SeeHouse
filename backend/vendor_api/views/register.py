@@ -35,7 +35,10 @@ class VendorRegisterView(APIView):
         if self.validate_parameter(phone_number, email, password) is True:
             if self.have_account(phone_number, email) is True:
                 return Response(
-                    {"message": "You have already account at SeeHouse"},
+                    {
+                        "output": False,
+                        "message": "You have already account at SeeHouse",
+                    },
                     status=HTTP_400_BAD_REQUEST,
                 )
             user_data = {
@@ -51,11 +54,11 @@ class VendorRegisterView(APIView):
                 serializer.save()
 
                 return Response(
-                    {"message": "Completed your registration process!"},
+                    {"output": True},
                     status=HTTP_201_CREATED,
                 )
 
         return Response(
-            {"message": "Incompleted registration! Please provide valid data"},
+            {"output": False},
             status=HTTP_400_BAD_REQUEST,
         )
