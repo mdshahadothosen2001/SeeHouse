@@ -2,10 +2,10 @@ from django.db import models
 
 
 class CountryModel(models.Model):
-    country_name = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.country_name
+        return self.name
 
     class Meta:
         verbose_name = "Country"

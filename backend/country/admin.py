@@ -6,10 +6,10 @@ from .models import CountryModel
 class CountryAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "country_name",
+        "name",
     )
-    list_display_links = ("country_name",)
-    search_fields = ("country_name",)
+    list_display_links = ("name",)
+    search_fields = ("name",)
     list_per_page = 25
 
 
