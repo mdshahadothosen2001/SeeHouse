@@ -6,10 +6,10 @@ from .models import ReligionModel
 class ReligionAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "religion_name",
+        "name",
     )
-    list_display_links = ("religion_name",)
-    search_fields = ("religion_name",)
+    list_display_links = ("name",)
+    search_fields = ("name",)
     list_per_page = 25
 
 

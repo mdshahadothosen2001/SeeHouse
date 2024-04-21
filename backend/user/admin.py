@@ -4,6 +4,9 @@ from user.models import Customer, UserAccount, Vendor
 
 
 class UserAccountAdmin(admin.ModelAdmin):
+    def religion(self, obj):
+        return obj.religion.name
+
     list_display = (
         "phone_number",
         "email",
@@ -60,6 +63,9 @@ class UserAccountAdmin(admin.ModelAdmin):
 
 
 class VendorAdmin(admin.ModelAdmin):
+    def religion(self, obj):
+        return obj.religion.name
+
     list_display = (
         "id",
         "phone_number",
@@ -102,6 +108,9 @@ class VendorAdmin(admin.ModelAdmin):
 
 
 class CustomerAdmin(admin.ModelAdmin):
+    def religion(self, obj):
+        return obj.religion.name
+
     list_display = (
         "id",
         "phone_number",
