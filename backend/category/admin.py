@@ -6,10 +6,10 @@ from .models import CategoryModel
 class CategoryAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "category_name",
+        "name",
     )
-    list_display_links = ("category_name",)
-    search_fields = ("category_name",)
+    list_display_links = ("name",)
+    search_fields = ("name",)
     list_per_page = 25
 
 

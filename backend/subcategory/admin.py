@@ -5,8 +5,8 @@ from .models import SubcategoryModel
 
 class SubcategoryAdmin(admin.ModelAdmin):
     def category(self, obj):
-        return obj.category.category_name
-    
+        return obj.category.name
+
     list_display = (
         "id",
         "subcategory_name",
