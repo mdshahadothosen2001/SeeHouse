@@ -10,18 +10,16 @@ from shop_type.models import ShopTypeModel
 class ShopModel(TimeStamp):
     vendor = models.OneToOneField(Vendor, on_delete=models.CASCADE)
     shop_number = models.CharField(max_length=100, unique=True, null=True, blank=True)
-    shop_name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True)
     shop_type = models.ForeignKey(
         ShopTypeModel, on_delete=models.DO_NOTHING, null=True, blank=True
     )
-    shop_title = models.CharField(max_length=100, null=True, blank=True)
+    title = models.CharField(max_length=100, null=True, blank=True)
     fields = models.CharField(max_length=100, null=True, blank=True)
     service_started = models.DateField(auto_now=False, null=True, blank=True)
     about = models.TextField(null=True, blank=True)
     delivery_days = models.PositiveSmallIntegerField(null=True, blank=True)
-    cover_photo = models.ImageField(
-        upload_to="images/uploads/shop_cover_photo", null=True, blank=True
-    )
+    cover_photo = models.URLField()
     rating = models.FloatField(default=0)
     is_active = models.BooleanField(default=True)
 
@@ -34,7 +32,7 @@ class ShopModel(TimeStamp):
             )
 
     def __str__(self):
-        return self.shop_name
+        return self.name
 
     class Meta:
         verbose_name = "Shop"
