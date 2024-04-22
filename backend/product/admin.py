@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import mark_safe
 
 from .models import ProductModel
 
@@ -10,11 +11,17 @@ class ProductAdmin(admin.ModelAdmin):
     def subcategory(self, obj):
         return obj.subcategory.name
 
+    def display_image(self, obj):
+        return mark_safe(
+            '<img src="%s" style="max-width:70px; max-height:70px;" />' % obj.thumbnail
+        )
+
     list_display = (
         "title",
         "category",
         "subcategory",
         "price",
+        "display_image",
         "points",
         "rating",
     )
