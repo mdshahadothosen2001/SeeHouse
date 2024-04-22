@@ -4,34 +4,38 @@ from .models import ProductModel
 
 
 class ProductAdmin(admin.ModelAdmin):
+    def category(self, obj):
+        return obj.category.name
+
     def subcategory(self, obj):
-        return obj.category.subcategory_name
-    
+        return obj.subcategory.name
+
     list_display = (
-        "id",
-        "product_name",
-        "product_code",
-        "thumbnail",
-        "stock",
-        "price",
-        "rating",
+        "title",
+        "category",
         "subcategory",
+        "price",
+        "points",
+        "rating",
     )
     list_display_links = (
-        "product_name",
-        "product_code",
-        "thumbnail",
-        "price",
-        "rating",
+        "title",
+        "category",
         "subcategory",
+        "price",
+        "points",
+        "rating",
     )
     search_fields = (
-        "product_name",
-        "product_code",
-        "price",
-        "rating",
+        "title",
+        "category",
         "subcategory",
+        "points",
+        "rating",
     )
+    list_filter = [
+        "is_active",
+    ]
     list_per_page = 25
 
 

@@ -1,35 +1,26 @@
-from django.conf import settings
 from django.db import models
-from django.utils.html import mark_safe
 
-from subcategory.models import SubcategoryModel
 from utils.models import CommonInfo
 from shop.models import ShopModel
+from category.models import CategoryModel
+from subcategory.models import SubcategoryModel
 
 
 class ProductModel(CommonInfo):
     shop = models.ForeignKey(ShopModel, on_delete=models.DO_NOTHING)
-    product_name = models.CharField(max_length=100)
-    product_code = models.CharField(max_length=100, unique=True)
+    title = models.CharField(max_length=100)
+    category = models.ForeignKey(CategoryModel, on_delete=models.DO_NOTHING)
     subcategory = models.ForeignKey(SubcategoryModel, on_delete=models.DO_NOTHING)
-    description = models.TextField()
-    product_thumbnail = models.ImageField(
-        upload_to="images/uploads/%Y/%m/%d", null=True, blank=True
-    )
-    stock = models.PositiveIntegerField()
-    price = models.DecimalField(max_digits=12, decimal_places=2)
-    rating = models.PositiveSmallIntegerField(default=0)
-
-    def thumbnail(self):
-        if self.product_thumbnail != "":
-            return mark_safe(
-                '<img src="{}{}" width=auto height="20" />'.format(
-                    f"{settings.MEDIA_URL}", self.product_thumbnail
-                )
-            )
+    description = models.CharField(max_length=200)
+    detail = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    points = models.PositiveSmallIntegerField(null=True, blank=True)
+    thumbnail = models.URLField()
+    images = models.JSONField()
+    rating = models.DecimalField(max_digits=2, decimal_places=1, default=0)
 
     def __str__(self):
-        return self.product_name
+        return self.title
 
     class Meta:
         verbose_name = "Product"
