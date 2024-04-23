@@ -9,11 +9,11 @@ class SubcategoryAdmin(admin.ModelAdmin):
 
     list_display = (
         "id",
-        "subcategory_name",
+        "name",
         "category",
     )
-    list_display_links = ("subcategory_name",)
-    search_fields = ("subcategory_name",)
+    list_display_links = ("name",)
+    search_fields = ("name",)
     list_per_page = 25
 
 

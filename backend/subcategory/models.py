@@ -5,10 +5,10 @@ from category.models import CategoryModel
 
 class SubcategoryModel(models.Model):
     category = models.ForeignKey(CategoryModel, on_delete=models.DO_NOTHING)
-    subcategory_name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100, unique=True)
 
     def __str__(self):
-        return self.subcategory_name
+        return f"{self.category.name} : {self.name}"
 
     class Meta:
         verbose_name = "Subcategory"
