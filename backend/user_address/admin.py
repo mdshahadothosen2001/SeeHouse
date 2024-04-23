@@ -6,18 +6,20 @@ from .models import UserAddressModel
 class UserAddressAdmin(admin.ModelAdmin):
     def user(self, obj):
         return obj.user.phone_number
-    
+
     def address(self, obj):
         return obj.address.address_line1
-    
+
     list_display = (
         "id",
         "user",
         "address",
+        "name",
         "is_default",
     )
     list_display_links = (
         "user",
+        "name",
         "address",
     )
     search_fields = (

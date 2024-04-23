@@ -7,6 +7,7 @@ from user.models import UserAccount
 class UserAddressModel(models.Model):
     user = models.ForeignKey(UserAccount, on_delete=models.DO_NOTHING)
     address = models.ForeignKey(AddressModel, on_delete=models.DO_NOTHING)
+    name = models.CharField(max_length=32, default="Home")
     is_default = models.BooleanField(default=False)
 
     def __str__(self):
